@@ -1,0 +1,67 @@
+# Resolve react_native_pods.rb with node to allow for hoisting
+def node_require(script)
+  require Pod::Executable.execute_command('node', ['-p',
+    "require.resolve(
+      '#{script}',
+      {paths: [process.argv[1]]},
+    )", __dir__]).strip
+end
+
+node_require('react-native/scripts/react_native_pods.rb')
+node_require('react-native-permissions/scripts/setup.rb')
+
+setup_permissions([
+  'Camera',
+  'Microphone',
+  'Notifications',
+  'PhotoLibrary',
+  'Documents', # Add for document picker
+])
+
+platform :ios, '16.0'
+prepare_react_native_project!
+
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
+
+target 'CourtBooka' do
+  config = use_native_modules!
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    :app_path => "#{Pod::Config.instance.installation_root}/..",
+    :hermes_enabled => true
+  )
+
+  # Explicitly include react-native-localize
+  pod 'RNLocalize', :path => '../node_modules/react-native-localize'
+
+  # Existing pods
+  pod 'FirebaseMessaging', '11.13.0', :modular_headers => true
+  pod 'FirebaseCore', '11.13.0', :modular_headers => true
+  pod 'FirebaseAnalytics', '11.13.0', :modular_headers => true
+  pod 'FirebaseInstallations', '11.13.0', :modular_headers => true
+  pod 'FirebaseCoreInternal', '11.13.0', :modular_headers => true
+  pod 'GoogleUtilities', '8.1.0', :modular_headers => true
+  pod 'GoogleDataTransport', '10.1.0', :modular_headers => true
+  pod 'AgoraRtcEngine_iOS'
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+  pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
+  post_install do |installer|
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false
+    )
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
+      end
+    end
+  end
+end

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <!-- Logo -->
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="AppLogo" translatesAutoresizingMaskIntoConstraints="NO" id="logo">
+                                <rect key="frame" x="107" y="248" width="300" height="300"/>
+                            </imageView>
+                            <!-- App Name -->
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="CourtBooka" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="appName">
+                                <rect key="frame" x="57" y="468" width="300" height="43"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="32"/>
+                                <color key="textColor" red="0.172" green="0.243" blue="0.314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/> <!-- #FFFFFF -->
+                        <constraints>
+                            <!-- Logo zentrieren -->
+                            <constraint firstItem="logo" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="logo-center-x"/>
+                            <constraint firstItem="logo" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="logo-center-y"/>
+                            <constraint firstItem="logo" firstAttribute="width" constant="200" id="logo-width"/>
+                            <constraint firstItem="logo" firstAttribute="height" constant="200" id="logo-height"/>
+                            <!-- App Name unter Logo -->
+                            <constraint firstItem="appName" firstAttribute="top" secondItem="logo" secondAttribute="bottom" constant="32" id="appName-top"/>
+                            <constraint firstItem="appName" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="appName-center-x"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="safeArea"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="firstResponder" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="AppLogo" width="200" height="200"/>
+    </resources>
+</document>
